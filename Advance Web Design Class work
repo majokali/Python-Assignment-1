@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JavaScript Form Validation Project</title>
+
+<style>
+    body{
+        font-family: Arial, sans-serif;
+        background:#f4f4f4;
+        padding:20px;
+    }
+
+    .container{
+        max-width:700px;
+        margin:auto;
+        background:white;
+        padding:20px;
+        border-radius:10px;
+        box-shadow:0 0 10px rgba(0,0,0,0.2);
+    }
+
+    h2{
+        text-align:center;
+        color:#333;
+    }
+
+    input{
+        width:100%;
+        padding:10px;
+        margin:8px 0;
+        border:1px solid #ccc;
+        border-radius:5px;
+    }
+
+    button{
+        background:#007bff;
+        color:white;
+        border:none;
+        padding:10px 15px;
+        border-radius:5px;
+        cursor:pointer;
+    }
+
+    button:hover{
+        background:#0056b3;
+    }
+
+    .error{
+        color:red;
+        font-size:14px;
+    }
+
+    .strength{
+        font-weight:bold;
+        margin-top:5px;
+    }
+
+    #displayArea{
+        margin-top:20px;
+        padding:10px;
+        background:#eef;
+        border-radius:5px;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<h2>Student Registration Form</h2>
+
+<form id="myForm">
+
+<label>Full Name</label>
+<input type="text" id="name">
+<div class="error" id="nameError"></div>
+
+<label>Email</label>
+<input type="email" id="email">
+<div class="error" id="emailError"></div>
+
+<label>Password</label>
+<input type="password" id="password" onkeyup="checkStrength()">
+<div id="strengthMessage" class="strength"></div>
+
+<br><br>
+<button type="submit">Submit</button>
+
+</form>
+
+<div id="displayArea">
+    <h3>Dynamic User Input Display</h3>
+    <p id="output"></p>
+</div>
+
+</div>
+
+<script>
+
+// Password Strength Checker
+function checkStrength(){
+
+    let password = document.getElementById("password").value;
+    let strengthMessage = document.getElementById("strengthMessage");
+
+    if(password.length < 6){
+        strengthMessage.innerHTML = "Weak Password";
+        strengthMessage.style.color = "red";
+    }
+    else if(password.length < 10){
+        strengthMessage.innerHTML = "Medium Password";
+        strengthMessage.style.color = "orange";
+    }
+    else{
+        strengthMessage.innerHTML = "Strong Password";
+        strengthMessage.style.color = "green";
+    }
+}
+
+// Form Validation + Dynamic Input Handling
+document.getElementById("myForm").addEventListener("submit", function(event){
+
+    event.preventDefault();
+
+    let name = document.getElementById("name").value.trim();
+    let email = document.getElementById("email").value.trim();
+
+    let valid = true;
+
+    document.getElementById("nameError").innerHTML = "";
+    document.getElementById("emailError").innerHTML = "";
+
+    if(name === ""){
+        document.getElementById("nameError").innerHTML =
+        "Name is required";
+        valid = false;
+    }
+
+    if(email === ""){
+        document.getElementById("emailError").innerHTML =
+        "Email is required";
+        valid = false;
+    }
+
+    if(valid){
+
+        document.getElementById("output").innerHTML =
+        "<strong>Name:</strong> " + name +
+        "<br><strong>Email:</strong> " + email;
+
+        alert("Form submitted successfully!");
+    }
+
+});
+
+</script>
+
+</body>
+</html>
